@@ -5,7 +5,7 @@ block content
   if errorMessage 
     span=errorMessage
   form(method="POST", enctype="multipart/form-data")
-    lable(fpr="avatar") Avatar
+    lable(for="avatar") Avatar
     input(type="file", id="avatar",name="avatar",accept="image/*")
     input(placeholder="Name", name="name", type="text", required, value=loggedInUser.name)
     input(placeholder="Email", name="email", type="email", required, value=loggedInUser.email)
