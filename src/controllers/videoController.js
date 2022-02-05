@@ -1,5 +1,5 @@
-import req from "express/lib/request";
 import Video from "../models/Video";
+import Comment from "../models/Comment";
 import User from "../models/User";
 
 export const home = async (req, res) => {
@@ -14,8 +14,7 @@ export const home = async (req, res) => {
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner");
-  console.log(video);
+  const video = await Video.findById(id).populate("owner").populate("comments");
   if (!video) {
     return res.status(400).render("404", { pageTitle: "Video not Found." });
   }
@@ -87,6 +86,7 @@ export const postUpload = async (req, res) => {
     user.save();
     return res.redirect("/");
   } catch (error) {
+    console.log(error);
     return res.status(400).render("upload", {
       pageTitle: "Upload Video",
       errorMessage: error._message,
@@ -108,6 +108,9 @@ export const deleteVideo = async (req, res) => {
   }
   await Video.findByIdAndDelete(id);
 
+  const user = await User.findById(_id);
+  user.videos.pop(id);
+  user.save();
   return res.redirect("/");
 };
 
@@ -132,5 +135,61 @@ export const registerView = async (req, res) => {
   }
   video.meta.views = video.meta.views + 1;
   await video.save();
+  return res.sendStatus(200);
+};
+
+export const createComment = async (req, res) => {
+  const {
+    session: { user },
+    body: { text },
+    params: { id },
+  } = req;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  const commentUser = await User.findById(user._id);
+  if (!commentUser) {
+    return res.sendStatus(404);
+  }
+
+  const comment = await Comment.create({
+    text,
+    owner: user._id,
+    video: id,
+  });
+
+  video.comments.push(comment._id);
+  video.save();
+  commentUser.comments.push(comment._id);
+  commentUser.save();
+
+  return res.status(201).json({ newCommentId: comment._id });
+};
+
+export const deleteComment = async (req, res) => {
+  const {
+    params: { id },
+    session: {
+      user: { _id },
+    },
+  } = req;
+  const comment = await Comment.findById(id);
+  if (!comment) {
+    return res.status(404), render("404", { pageTitle: "Comment not found." });
+  }
+  if (String(comment.owner) !== String(_id)) {
+    return res.status(403).redirect("/");
+  }
+  await Comment.findByIdAndDelete(id);
+
+  const video = await Video.findById(comment.video);
+  video.comments.pop({ _id });
+  video.save();
+
+  const commentUser = await User.findById(_id);
+  commentUser.comments.pop(id);
+  commentUser.save();
+
   return res.sendStatus(200);
 };
