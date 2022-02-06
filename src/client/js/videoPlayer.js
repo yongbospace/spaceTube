@@ -35,7 +35,9 @@ const handleVideoClick = () => {
   playAndPause();
 };
 const handleKeydown = (event) => {
+  console.log(event);
   if (event.target.id !== "textarea" && event.keyCode === 32) {
+    event.preventDefault();
     playAndPause();
   }
 };

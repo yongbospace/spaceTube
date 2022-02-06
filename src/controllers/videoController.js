@@ -111,6 +111,9 @@ export const deleteVideo = async (req, res) => {
   const user = await User.findById(_id);
   user.videos.pop(id);
   user.save();
+
+  await Comment.deleteMany({ video: video._id });
+
   return res.redirect("/");
 };
 
