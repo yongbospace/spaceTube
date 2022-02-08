@@ -130,7 +130,7 @@ export const finishGithubLogin = async (req, res) => {
     req.session.user = user;
     return res.redirect("/");
   } else {
-    req.flash("error", "Wrong github account");
+    req.flash("error", "Token request error");
     return res.redirect("/login");
   }
 };
