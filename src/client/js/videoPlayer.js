@@ -73,7 +73,9 @@ const handleLoadedMetadata = () => {
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration);
 };
-if (video) {
+
+const isHeroku = process.env.NODE_ENV === "production";
+if (video && isHeroku) {
   handleLoadedMetadata();
 }
 
