@@ -124,6 +124,7 @@ export const finishGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userData.location,
       });
+      console.log(user);
     }
     req.session.loggedIn = true;
     req.session.user = user;
