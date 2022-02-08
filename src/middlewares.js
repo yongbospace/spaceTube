@@ -1,5 +1,5 @@
 import multer from "multer";
-import multerS3 from "multerS3";
+import multerS3 from "multer-S3";
 import aws from "aws-sdk";
 
 const s3 = aws.S3({
