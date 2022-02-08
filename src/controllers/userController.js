@@ -64,7 +64,7 @@ export const startGithubLogin = (req, res) => {
   const baseUrl = "https://github.com/login/oauth/authorize";
   const config = {
     client_id: process.env.GH_CLIENT,
-    allow_signup: false,
+    allow_signup: true,
     scope: "read:user user:email",
   };
   const params = new URLSearchParams(config).toString();
@@ -110,7 +110,7 @@ export const finishGithubLogin = async (req, res) => {
       (email) => email.primary === true && email.verified === true
     );
     if (!emailObj) {
-      // set notification
+      req.flash("error", "You are not allowed to login with github");
       return res.redirect("/login");
     }
     let user = await User.findOne({ email: emailObj.email });
@@ -130,6 +130,7 @@ export const finishGithubLogin = async (req, res) => {
     req.session.user = user;
     return res.redirect("/");
   } else {
+    req.flash("error", "Wrong github account");
     return res.redirect("/login");
   }
 };
