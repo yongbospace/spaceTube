@@ -1,12 +1,10 @@
 import User from "../models/User";
-import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
-  const exists = await User.exists({ $or: [{ username }, { email }] });
   const pageTitle = "Join";
   if (password !== password2) {
     return res.status(400).render("join", {
@@ -14,6 +12,7 @@ export const postJoin = async (req, res) => {
       errorMessage: "Password confirmation is not match.",
     });
   }
+  const exists = await User.exists({ $or: [{ username }, { email }] });
   if (exists) {
     return res.status(400).render("join", {
       pageTitle,
@@ -31,7 +30,7 @@ export const postJoin = async (req, res) => {
     return res.redirect("/login");
   } catch (error) {
     return res.status(400).render("join", {
-      pageTitle,
+      pageTitle: "Upload Video",
       errorMessage: error._message,
     });
   }
@@ -58,7 +57,7 @@ export const postLogin = async (req, res) => {
   }
   req.session.loggedIn = true;
   req.session.user = user;
-  res.redirect("/");
+  return res.redirect("/");
 };
 
 export const startGithubLogin = (req, res) => {
@@ -85,7 +84,9 @@ export const finishGithubLogin = async (req, res) => {
   const tokenRequest = await (
     await fetch(finalUrl, {
       method: "POST",
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json",
+      },
     })
   ).json();
   if ("access_token" in tokenRequest) {
@@ -105,7 +106,6 @@ export const finishGithubLogin = async (req, res) => {
         },
       })
     ).json();
-
     const emailObj = emailData.find(
       (email) => email.primary === true && email.verified === true
     );

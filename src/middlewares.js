@@ -1,4 +1,18 @@
 import multer from "multer";
+import multerS3 from "multerS3";
+import aws from "aws-sdk";
+
+const s3 = aws.S3({
+  credentials: {
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET,
+  },
+});
+
+const multerUploader = {
+  s3: s3,
+  bucket: "spacetube2021",
+};
 
 export const localsMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn);
@@ -28,8 +42,11 @@ export const publicOnlyMiddleware = (req, res, next) => {
 export const avatarUpload = multer({
   dest: "uploads/avatars",
   limits: { fileSize: 3000000 },
+  storage: multerUploader,
 });
+
 export const videoUpload = multer({
   dest: "uploads/videos/",
   limits: { fileSize: 20000000 },
+  storage: multerUploader,
 });
