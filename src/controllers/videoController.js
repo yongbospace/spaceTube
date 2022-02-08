@@ -43,21 +43,20 @@ export const postEdit = async (req, res) => {
   } = req.session;
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.exists({ _id: id });
+  const video = await Video.findById(id);
   if (!video) {
-    return res.render("404", { pageTitle: "Video not Found." });
+    return res.status(404).render("404", { pageTitle: "Video not Found." });
   }
   if (String(video.owner) !== String(_id)) {
+    req.flash("error", "Not Authorized");
     return res.status(403).redirect("/");
   }
-  await Video.findOneAndUpdate(
-    { _id: id },
-    {
-      title,
-      description,
-      hashtags: Video.formatHashtags(hashtags),
-    }
-  );
+
+  await Video.findOneAndUpdate(id, {
+    title,
+    description,
+    hashtags: Video.formatHashtags(hashtags),
+  });
   req.flash("success", "Changes saved");
   return res.redirect(`/videos/${id}`);
 };
