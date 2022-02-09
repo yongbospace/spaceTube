@@ -23,14 +23,14 @@ const addComment = (text, id) => {
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
-  span.innerText = `  ${text}`;
-  const span2 = document.createElement("span");
-  span2.innerText = "❌";
+  span.innerText = `  ${text}  `;
+  const icon2 = document.createElement("i");
+  icon2.className = "fas fa-backspace";
   newComment.appendChild(icon);
   newComment.appendChild(span);
-  newComment.appendChild(span2);
+  newComment.appendChild(icon2);
   videoComments.prepend(newComment);
-  span2.addEventListener("click", handleDeleteComment);
+  icon2.addEventListener("click", handleDeleteComment);
 };
 
 const handleSubmit = async (event) => {

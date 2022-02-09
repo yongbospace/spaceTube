@@ -3,7 +3,7 @@ extends base.pug
 
 block content 
   if errorMessage 
-    span=errorMessage
+    span.errorMessage.error=errorMessage
   form(method="POST")
     input(placeholder="Name", name="name", type="text", required)
     input(placeholder="Email", name="email", type="email", required)

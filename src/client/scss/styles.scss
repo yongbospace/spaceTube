@@ -51,20 +51,26 @@ main {
   }
 }
 
-.message {
+.message,
+.errorMessage {
   position: absolute;
   top: 10px;
   left: 0;
   right: 0;
   margin: 0 auto;
   max-width: 200px;
-  padding: 10px 20px;
-  border-radius: 50px;
+  padding: 10px 10px;
+  border-radius: 10px;
   text-align: center;
   animation: goAway 0.5s ease-in-out forwards;
-  animation-delay: 5s;
+  animation-delay: 3s;
+  font-weight: 600;
   &.error {
     background-color: tomato;
     color: white;
+  }
+  &.info {
+    background-color: azure;
+    color: $bg;
   }
 }

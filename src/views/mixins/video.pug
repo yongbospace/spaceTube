@@ -8,4 +8,7 @@ mixin video(video)
       span.video-mixin__title=video.title
       div.video-mixin__meta 
         span #{video.owner.name} • 
-        span #{video.meta.views} 회
+        if video.meta.views < 2
+          span #{video.meta.views} view
+        else
+          span #{video.meta.views} views

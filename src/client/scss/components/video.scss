@@ -9,13 +9,16 @@
   .video-mixin__data {
     padding: 0px 15px;
     .video-mixin__title {
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: 600;
       display: block;
       margin-top: 10px;
     }
     .video-mixin__meta {
+      color: $yellow;
       margin-top: 5px;
       font-size: 12px;
+      font-weight: 600;
     }
   }
 }

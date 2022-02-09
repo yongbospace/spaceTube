@@ -24,20 +24,31 @@ block content
           i.fas.fa-expand 
 
   div.video__data
-    p.video__title=video.title
-    small.video__owner Uploaded by 
-      a(href=`/users/${video.owner._id}`)=video.owner.name
-    small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr",{weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
-    if String(video.owner._id) === String(loggedInUser._id)
-      a(href=`${video.id}/edit`) Edit Video &rarr;
-      br
-      a(href=`${video.id}/delete`) Delete Video &rarr;
+    
+    div.video__title=video.title
+
+    div.video__description=video.description
+    div.video__contents
+      div.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr",{weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+      div.video__views
+        if video.meta.views < 2
+          span #{video.meta.views} view
+        else
+          span #{video.meta.views} views
+      div.video__owner Uploaded by 
+        a(href=`/users/${video.owner._id}`)=video.owner.name
+    
+    div.video__edit
+      if String(video.owner._id) === String(loggedInUser._id)
+        a(href=`${video.id}/edit`) Edit
+        a(href=`${video.id}/delete`) Delete
 
   if loggedIn
     div.video__add-comments
       form.video__comments-form#commentForm
-        textarea(cols="30", rows="10", placeholder="Write a nice comment.")#textarea
-        button Add Comment 
+        textarea(cols="30", rows="1", placeholder="Write a nice comment.")#textarea
+        button.fas.fa-angle-right
+
   div.video__comments
     ul
       each comment in video.comments.reverse()
@@ -45,7 +56,7 @@ block content
           i.fas.fa-comment   
           span  #{comment.text}
           if String(comment.owner._id) === String(loggedInUser._id)
-            span.delete-btn ❌
+            span.fas.fa-backspace.delete-btn
 
 block scripts 
   script(src="/static/js/videoPlayer.js")
