@@ -69,7 +69,7 @@ const handleDownload = async () => {
 };
 
 const handleStart = () => {
-  actionBtn.innerText = "Recording";
+  actionBtn.innerText = "Recording...";
   actionBtn.disabled = true;
   actionBtn.removeEventListener("click", handleStart);
   recorder = new MediaRecorder(stream, { mineType: "video/webm" });
@@ -79,7 +79,7 @@ const handleStart = () => {
     video.src = videoFile;
     video.loop = true;
     video.play();
-    actionBtn.innerText = "Download";
+    actionBtn.innerText = "DOWNLOAD";
     actionBtn.disabled = false;
     actionBtn.addEventListener("click", handleDownload);
   };
