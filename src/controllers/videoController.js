@@ -52,7 +52,7 @@ export const postEdit = async (req, res) => {
     return res.status(403).redirect("/");
   }
 
-  await Video.findOneAndUpdate(id, {
+  await Video.findByIdAndUpdate(id, {
     title,
     description,
     hashtags: Video.formatHashtags(hashtags),
