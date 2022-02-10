@@ -46,8 +46,8 @@ block content
   if loggedIn
     div.video__add-comments
       form.video__comments-form#commentForm
-        textarea(cols="30", rows="1", placeholder="Write a nice comment.")#textarea
-        button.fas.fa-angle-right
+        textarea(cols="50", rows="2", placeholder="Write a nice comment.")#textarea
+        button.video__add-comment-btn ✓
 
   div.video__comments
     ul
@@ -56,7 +56,7 @@ block content
           i.fas.fa-comment   
           span  #{comment.text}
           if String(comment.owner._id) === String(loggedInUser._id)
-            span.fas.fa-backspace.delete-btn
+            span.fas.fa-backspace.delete-btn 
 
 block scripts 
   script(src="/static/js/videoPlayer.js")

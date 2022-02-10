@@ -63,21 +63,22 @@
 }
 .video__add-comments {
   margin-top: 15px;
-  display: flex;
-  align-items: center;
+
   .video__comments-form {
-    padding: 10px;
-    border-radius: 5px;
-    justify-content: center;
+    display: flex;
+    align-items: center;
     textarea {
       font-size: 16px;
-      border: none;
+      border: 1px solid rgba(255, 255, 255, 0.3);
       background-color: transparent;
       color: $yellow;
     }
     button {
-      position: relative;
-      right: 20px;
+      font-size: 20px;
+      margin-left: 10px;
+      background-color: $yellow;
+      border: 0;
+      border-radius: 7px;
     }
   }
 }
