@@ -1,8 +1,10 @@
 footer {
+  position: fixed;
+  width: 100%;
+  bottom: 5%;
   color: $yellow;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   opacity: 0.8;
-  margin-top: 50px;
 }
