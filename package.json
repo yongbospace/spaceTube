@@ -4,7 +4,7 @@
   "description": "The best way to watch videos.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yongbospace/wetube-reloaded.git"
+    "url": "git+https://github.com/yongbospace/spaceTube.git"
   },
   "scripts": {
     "start": "node build/init.js",
@@ -17,9 +17,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yongbospace/wetube-reloaded/issues"
+    "url": "https://github.com/yongbospace/spaceTube/issues"
   },
-  "homepage": "https://github.com/yongbospace/wetube-reloaded#readme",
+  "homepage": "https://github.com/yongbospace/spaceTube#readme",
   "dependencies": {
     "@ffmpeg/core": "^0.8.5",
     "@ffmpeg/ffmpeg": "^0.9.7",
